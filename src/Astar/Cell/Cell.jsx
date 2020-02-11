@@ -3,14 +3,20 @@ import "./Cell.css";
 
 export default class Cell extends React.Component {
 	render() {
-		const {
+		let {
+			state,
 			col, 
 			row, 
+			color,
 			isWall,
+			IsShown,
 		} = this.props;
 
 		return (
-			<div className="cell"
+			<div 
+				className="cell"
+				onMouseEnter={() => IsShown=true}
+				onMouseLeave={() => IsShown=false}
 				id = {`cell ${row} ${col}`}
 			>
 			</div>
