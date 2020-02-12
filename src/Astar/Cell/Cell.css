@@ -3,5 +3,21 @@
 	height: 40px;
 	background-color:white;
 	outline: 1.5px solid black;
-	display: inline-block;
+	display: inline-block; 
+}
+
+.cell-visited {
+	background-color:blue;
+}
+
+.cell-start {
+	background-color: green;
+}
+
+.cell-end {
+	background-color: red;
+}
+
+.cell-wall {
+	background-color: black;
 }
