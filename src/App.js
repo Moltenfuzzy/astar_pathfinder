@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Astar from './Astar/Astar'
+import AstarPathfinder from './AstarPathfinder/AstarPathfinder'
 
 function App() {
   return (
     <div className="App">
-      <Astar />
+      <AstarPathfinder />
     </div>
   );
 }
