@@ -8,6 +8,7 @@ export default class Cell extends React.Component {
 		this.state = { 
 				row: props.row,
 				col: props.col,
+				isVisited: props.isVisited,
 				isWall: props.isWall,
 				isStart: props.isStart,
 				isEnd: props.isEnd
@@ -37,6 +38,7 @@ export default class Cell extends React.Component {
 
 	render() {
 		const extraClassName = 
+		this.state.isVisited ? 'cell-visited' :
 		this.state.isEnd ? 'cell-end' : 
 		this.state.isStart ? 'cell-start': 
 		this.state.isWall ? 'cell-wall' : '';
@@ -44,7 +46,7 @@ export default class Cell extends React.Component {
 		return (
 			<div 
 				className={`cell ${extraClassName}`}
-				id = {`cell ${this.state.row} ${this.state.col}`}
+				id = {`cell-${this.state.row}-${this.state.col}`}
 				onMouseEnter={this.handleMouseEnter}
 				onMouseDown={this.handleMouseDown}
 			>

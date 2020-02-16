@@ -33,7 +33,6 @@
 //         // Add the child to the openList
 //         add the child to the openList
 
-
 class Node {
 	constructor(parent = null, pos = null) {
 		this.parent = parent;
@@ -46,7 +45,6 @@ class Node {
 
 // pass in the grid, start and end locations
 export function Astar(grid, start, end) {
-	console.log(start.row); 
 
 	let start_node = new Node(null, start);
 	let end_node = new Node(null, end); 
@@ -61,6 +59,8 @@ export function Astar(grid, start, end) {
 		let current_index = 0; 
 
 		for(let i = 0; i < open_list.length; i++) {
+			// total cost of node(i) less than current node, 
+			// assign node(i) to current node
 			if(open_list[i].f < current_node.f) {
 				current_node = open_list[i];
 				current_index = i; 
@@ -71,11 +71,14 @@ export function Astar(grid, start, end) {
 		open_list.splice(current_index,1); 
 		closed_list.push(current_node); 
 
-		if(current_node === end_node) {
+		// console.log(isEqual(current_node, end_node));
+
+		// BUG: Open list is contains too many nodes, closed list is holding 1/10 of open list
+		if(isEqual(current_node, end_node)) {
 			let path = [];
 			let current = current_node;
 
-			while(current !== null) {
+			while(current != null) {
 				path.push(current.pos);
 				current = current.parent;
 			}
@@ -96,34 +99,50 @@ export function Astar(grid, start, end) {
 			{row: 1, col: 1}
 		]; 
 	
+		// BUG: doesnt push any children, so open_list will be 0
 		// Generating Children
 		for(let i = 0; i < neighbors.length; i++) {
 			let node_pos = {
-				row: current_node.pos.row + neightors[i].row,
-				col: current_node.pos.row + neighbors[i].col
+				row: current_node.pos.row + neighbors[i].row,
+				col: current_node.pos.col + neighbors[i].col
 			};
 
 			// CHECK IF IN RANGE
-			if(node_pos.row > ((grid.length - 1) || node_position))
+			if(node_pos.row > grid.length - 1 || node_pos.row < 0 || node_pos.col > grid[grid.length-1].length - 1 || node_pos.col < 0)
 				continue; 
-			if(grid[node_pos.row][node_pos.col] !== 0)
+
+			// Ensuring not wall
+			if(grid[node_pos.row][node_pos.col].props.isWall)
 				continue;
 		
-			children.push(new Node(current_node, node_position)); 
+			children.push(new Node(current_node, node_pos)); 
 		}
 
 		// Looping through children
-		for(let child = 0; child < children.length; child++) {
-			for(let closed_child = 0; closed_child < closed_list.length; closed_child++) {
-				if(children[child] === closed_list[closed_child]) {
+		for(let i = 0; i < children.length; i++) {
+
+			for(let j = 0; j < closed_list.length; j++) {
+				if(children[i].pos === closed_list[j].pos) {
 					continue; 
 				}
 			}
-		}
-	
-	}
 
-	
+			children[i].g = current_node.g + 1;
+			// Pythagoren Theorem => a^2 + b^2 = c^2
+			children[i].h = Math.pow((children[i].pos.row - end_node.pos.row), 2) + Math.pow((children[i].pos.col - end_node.pos.col), 2);
+			children[i].f = children[i].g + children[i].h; 
+
+			for(let j = 0; j < open_list.length; j++) {
+				if(isEqual(children[i], open_list[j]) && children[i].g > open_list[j].g)
+					continue;
+			}
+
+			open_list.push(children[i]); 
+		}
+	}
 }
 
+function isEqual(current_node, end_node) {
+	return (current_node.pos.row === end_node.pos.row) && (current_node.pos.col === end_node.pos.col);
+}
 
