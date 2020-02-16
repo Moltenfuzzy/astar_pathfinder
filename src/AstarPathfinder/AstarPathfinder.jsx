@@ -47,7 +47,7 @@ export default class AstarPathfinder extends React.Component {
   render() {
     return (
       <div>
-        <button style={{marginTop: "50px"}}onClick={() => this.Visualize()}>
+        <button className="btn" style={{marginTop: "50px"}}onClick={() => this.Visualize()}>
           Visualize 
         </button>
         <div className="grid">
