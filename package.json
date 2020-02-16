@@ -1,6 +1,6 @@
 {
   "homepage": "https://moltenfuzzy.github.io/astar_pathfinder/",
-  "name": "my-app",
+  "name": "astar_pathfinder",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
