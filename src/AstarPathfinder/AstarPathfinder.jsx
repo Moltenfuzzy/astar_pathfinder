@@ -73,9 +73,9 @@ function getInitialGrid() {
       else if(i === END_POS.row && j === END_POS.col) {
         grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={false} isEnd={true}/>;
       }
-      else if(i == 15 && j == 15) {
-        grid[i][j] = <Cell row={i} col={j} isWall={true} isStart={false} isEnd={false}/>;
-      }
+      // else if(i == 15 && j == 15) {
+      //   grid[i][j] = <Cell row={i} col={j} isWall={true} isStart={false} isEnd={false}/>;
+      // }
       else {
         grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={false} isEnd={false}/>; 
       }
