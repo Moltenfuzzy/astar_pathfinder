@@ -19,7 +19,7 @@ export default class Cell extends React.Component {
 	// TODO: ADD CONDITION FOR ISEND SO IT ISNT ISWALL AND ISEND/ISSTART
 
 	handleMouseDown() {
-		if(!this.state.isStart)
+		if(!this.state.isStart || !this.state.isEnd)
 			this.setState({isWall: !this.state.isWall});
 	}
 

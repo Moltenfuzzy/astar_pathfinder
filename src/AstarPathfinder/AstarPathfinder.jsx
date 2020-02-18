@@ -1,9 +1,11 @@
-import React from "react";
+import React, { cloneElement } from "react";
 import Cell from "./Cell/Cell";
 import "./AstarPathfinder.css";
 import { Astar } from "../Algorithms/Astar.js"
 
-// TODO: Fix bug with grid thats displaying, each cell doesnt have correct row and col
+const MAXROW = 20; 
+const MAXCOL = 30; 
+
 const START_POS = {
   row: 1,
   col: 1
@@ -23,17 +25,14 @@ export default class AstarPathfinder extends React.Component {
   constructor() { 
     super(); 
     this.state = { 
-      grid: []
+      gridData: getInitialGrid()
     }
-  }
-
-  componentDidMount() { 
-    this.setState({grid: getInitialGrid()});
   }
 
   Visualize() {
     // how do i get the updated grid ??
-    const grid = this.state.grid;
+    const grid = this.state.gridData;
+    console.log(grid);
     const path = Astar(grid, START_POS, END_POS);
     this.animatePath(path);
     console.log(path); 
@@ -49,41 +48,49 @@ export default class AstarPathfinder extends React.Component {
     }
   }
 
+  getWallToggledGrid(row, col) {
+
+  }
+
   render() {
-    const grid = this.state.grid; 
+    // map grid data to an array
+    const grid = this.state.gridData.map(row => {
+      return row.map(cell => {
+            return <Cell row={cell.row} col={cell.col} isVisited={cell.isVisited} isWall={cell.isWall} isStart={cell.isStart} isEnd={cell.isEnd} />
+        } );
+    } );
+
+    console.log(grid); 
     return (
-      <div>
+      <>
         <button className="btn" onClick={() => this.Visualize()}>
           Visualize 
         </button>
-        <div 
-            className="grid" 				
-            >
+        <div className="grid">
           {grid}
         </div>
-      </div>
+      </>
     );
   }
 }
 
-// REMOVE MAGIC NUMBERS
-function getInitialGrid() {
-  let grid = create2DArray(20,30);
+const createCell = (row, col, isWall=false) => {
+  return ( {
+    row, 
+    col, 
+    isVisited: false,
+    isWall,
+    isStart: row === START_POS.row && col === START_POS.col,
+    isEnd: row === END_POS.row && col === END_POS.col, 
+  });
+}
 
-  for(let i = 0; i < 20; i++) {
-    for(let j = 0; j < 30; j++) {
-      // TODO: CHANGE THESE TO CONSTANTS OR ALLOW USER TO INPUT LOCATION
-      if(i === START_POS.row && j === START_POS.col) {
-        // This is why we need to pass props into child components
-        // If we don't then it wouldnt define these properties im passing in the component
-        grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={true} isEnd={false}/>;
-      }
-      else if(i === END_POS.row && j === END_POS.col) {
-        grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={false} isEnd={true}/>;
-      }
-      else {
-        grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={false} isEnd={false}/>; 
-      }
+function getInitialGrid() {
+  let grid = create2DArray(MAXROW, MAXCOL);
+
+  for(let i = 0; i < MAXROW; i++) {
+    for(let j = 0; j < MAXCOL; j++) {
+      grid[i][j] = createCell(i,j,false); 
     }
   }
 

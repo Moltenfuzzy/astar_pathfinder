@@ -112,7 +112,7 @@ export function Astar(grid, start, end) {
 				continue; 
 
 			// Ensuring not wall
-			if(grid[node_pos.row][node_pos.col].props.isWall)
+			if(grid[node_pos.row][node_pos.col].isWall)
 				continue;
 		
 			children.push(new Node(current_node, node_pos)); 

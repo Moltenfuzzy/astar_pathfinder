@@ -13,6 +13,10 @@
 	background-color:blue;
 }
 
+.cell-path {
+	background-color:yellow;
+}
+
 .cell-start {
 	background-color: green;
 }
@@ -23,8 +27,4 @@
 
 .cell-wall {
 	background-color: black;
-}
-
-.cell-path {
-	background-color:yellow;
 }
