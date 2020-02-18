@@ -29,14 +29,16 @@ export default class AstarPathfinder extends React.Component {
     }
   }
 
+  // BUG: pathfinding algo is broken, leaving 1 cell for it to pass through freezes app
   Visualize() {
-    // how do i get the updated grid ??
     const grid = this.state.gridData;
     const path = Astar(grid, START_POS, END_POS);
     if(path.length > 0) {
       this.animatePath(path);
     }
-    console.log(path); 
+    else {
+      console.log(path); 
+    }
   } 
 
   animatePath(path) {
@@ -59,6 +61,7 @@ export default class AstarPathfinder extends React.Component {
     const newGridData = [...this.state.gridData];
     newGridData[row][col].isWall = !newGridData[row][col].isWall;
     this.setState({gridData: newGridData});
+    console.log(newGridData[row][col].isWall)
   } 
 
   render() {

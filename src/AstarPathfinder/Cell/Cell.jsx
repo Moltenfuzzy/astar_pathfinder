@@ -3,6 +3,10 @@ import "./Cell.css";
 
 export default class Cell extends React.Component {
 
+	shouldComponentUpdate(prevProps, nextProps ) {
+		return prevProps !== nextProps;
+	}
+
 	render() {
 		const {
 			row,
