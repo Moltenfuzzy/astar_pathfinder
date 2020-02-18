@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React from "react";
 import Cell from "./Cell/Cell";
 import "./AstarPathfinder.css";
 import { Astar } from "../Algorithms/Astar.js"
@@ -32,9 +32,10 @@ export default class AstarPathfinder extends React.Component {
   Visualize() {
     // how do i get the updated grid ??
     const grid = this.state.gridData;
-    console.log(grid);
     const path = Astar(grid, START_POS, END_POS);
-    this.animatePath(path);
+    if(path.length > 0) {
+      this.animatePath(path);
+    }
     console.log(path); 
   } 
 
@@ -55,7 +56,9 @@ export default class AstarPathfinder extends React.Component {
   }
 
   toggleWall(row, col) {
-    this.setState({gridData: !this.state.gridData[row][col].isWall})
+    const newGridData = [...this.state.gridData];
+    newGridData[row][col].isWall = !newGridData[row][col].isWall;
+    this.setState({gridData: newGridData});
   } 
 
   render() {
@@ -69,12 +72,12 @@ export default class AstarPathfinder extends React.Component {
               isWall={cell.isWall} 
               isStart={cell.isStart} 
               isEnd={cell.isEnd}
-              onMouseDown={this.handleMouseDown(cell.row, cell.col)}
+              onMouseDown={() => this.handleMouseDown(cell.row, cell.col)}
               />
         });
     });
 
-    console.log(grid); 
+    // console.log(grid); 
 
     return (
       <>

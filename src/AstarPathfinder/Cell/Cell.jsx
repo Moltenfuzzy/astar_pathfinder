@@ -3,30 +3,28 @@ import "./Cell.css";
 
 export default class Cell extends React.Component {
 
-	constructor(props) {
-		super(props); 
-		this.state = { 
-				row: props.row,
-				col: props.col,
-				isVisited: props.isVisited,
-				isWall: props.isWall,
-				isStart: props.isStart,
-				isEnd: props.isEnd,
-				}
-	}
-	
 	render() {
+		const {
+			row,
+			col,
+			isVisited,
+			isEnd,
+			isStart,
+			isWall,
+			onMouseDown
+		} = this.props;
+
 		const extraClassName = 
-		this.state.isVisited ? 'cell-visited' :
-		this.state.isEnd ? 'cell-end' : 
-		this.state.isStart ? 'cell-start': 
-		this.state.isWall ? 'cell-wall' : '';
+		isVisited ? 'cell-visited' :
+		isEnd ? 'cell-end' : 
+		isStart ? 'cell-start': 
+		isWall ? 'cell-wall' : '';
 
 		return (
 			<div 
 				className={`cell ${extraClassName}`}
-				id = {`cell-${this.state.row}-${this.state.col}`}
-				onMouseDown={this.props.onMouseDown}
+				id = {`cell-${row}-${col}`}
+				onMouseDown={onMouseDown}
 			>
 			</div>
 		);
