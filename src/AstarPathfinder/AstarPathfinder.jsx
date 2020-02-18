@@ -19,16 +19,21 @@ export default class AstarPathfinder extends React.Component {
   // dont put jsx in state
   // call the function directly inside render, and render that
   // store the data that you use to render JSX in state, and map over that state data inside render
-  // Also this can be turned into a function
 
   constructor() { 
     super(); 
-    this.grid = getInitialGrid();
+    this.state = { 
+      grid: []
+    }
+  }
+
+  componentDidMount() { 
+    this.setState({grid: getInitialGrid()});
   }
 
   Visualize() {
     // how do i get the updated grid ??
-    const grid = this.grid; 
+    const grid = this.state.grid;
     const path = Astar(grid, START_POS, END_POS);
     this.animatePath(path);
     console.log(path); 
@@ -45,13 +50,16 @@ export default class AstarPathfinder extends React.Component {
   }
 
   render() {
+    const grid = this.state.grid; 
     return (
       <div>
-        <button className="btn" style={{marginTop: "50px"}}onClick={() => this.Visualize()}>
+        <button className="btn" onClick={() => this.Visualize()}>
           Visualize 
         </button>
-        <div className="grid">
-          {this.grid}
+        <div 
+            className="grid" 				
+            >
+          {grid}
         </div>
       </div>
     );
@@ -73,9 +81,6 @@ function getInitialGrid() {
       else if(i === END_POS.row && j === END_POS.col) {
         grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={false} isEnd={true}/>;
       }
-      // else if(i == 15 && j == 15) {
-      //   grid[i][j] = <Cell row={i} col={j} isWall={true} isStart={false} isEnd={false}/>;
-      // }
       else {
         grid[i][j] = <Cell row={i} col={j} isWall={false} isStart={false} isEnd={false}/>; 
       }

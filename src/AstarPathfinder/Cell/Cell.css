@@ -1,8 +1,12 @@
 .cell {
-	width: 35px;
+	/* width: 35px;
 	height: 35px;
 	outline: 1px solid black;
-	display: inline-block; 
+	display: inline-block;  */
+	display: inline-flex;
+    width: calc(100% / 30);
+    padding-bottom: calc(100% / 30);
+    outline: 1px solid black;
 }
 
 .cell-visited {
