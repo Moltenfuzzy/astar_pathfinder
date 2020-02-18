@@ -11,18 +11,10 @@ export default class Cell extends React.Component {
 				isVisited: props.isVisited,
 				isWall: props.isWall,
 				isStart: props.isStart,
-				isEnd: props.isEnd
-		}
-		this.handleMouseDown = this.handleMouseDown.bind(this); 
+				isEnd: props.isEnd,
+				}
 	}
-
-	// TODO: ADD CONDITION FOR ISEND SO IT ISNT ISWALL AND ISEND/ISSTART
-
-	handleMouseDown() {
-		if(!this.state.isStart || !this.state.isEnd)
-			this.setState({isWall: !this.state.isWall});
-	}
-
+	
 	render() {
 		const extraClassName = 
 		this.state.isVisited ? 'cell-visited' :
@@ -34,7 +26,7 @@ export default class Cell extends React.Component {
 			<div 
 				className={`cell ${extraClassName}`}
 				id = {`cell-${this.state.row}-${this.state.col}`}
-				onMouseDown={this.handleMouseDown}
+				onMouseDown={this.props.onMouseDown}
 			>
 			</div>
 		);

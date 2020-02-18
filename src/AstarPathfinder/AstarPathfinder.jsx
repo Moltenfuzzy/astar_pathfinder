@@ -39,31 +39,48 @@ export default class AstarPathfinder extends React.Component {
   } 
 
   animatePath(path) {
-    for (let i = 0; i < path.length; i++) {
-      setTimeout(() => {
-        const cell = path[i];
-        document.getElementById(`cell-${cell.row}-${cell.col}`).className =
-          'cell cell-path';
-      }, 50 * i);
+    if(path.length > 0) {
+      for (let i = 0; i < path.length; i++) {
+        setTimeout(() => {
+          const cell = path[i];
+          document.getElementById(`cell-${cell.row}-${cell.col}`).className =
+            'cell cell-path';
+        }, 50 * i);
+      }
     }
   }
 
-  getWallToggledGrid(row, col) {
-
+  handleMouseDown(row, col) {
+    this.toggleWall(row, col);
   }
+
+  toggleWall(row, col) {
+    this.setState({gridData: !this.state.gridData[row][col].isWall})
+  } 
 
   render() {
     // map grid data to an array
     const grid = this.state.gridData.map(row => {
       return row.map(cell => {
-            return <Cell row={cell.row} col={cell.col} isVisited={cell.isVisited} isWall={cell.isWall} isStart={cell.isStart} isEnd={cell.isEnd} />
-        } );
-    } );
+            return <Cell 
+              row={cell.row} 
+              col={cell.col} 
+              isVisited={cell.isVisited} 
+              isWall={cell.isWall} 
+              isStart={cell.isStart} 
+              isEnd={cell.isEnd}
+              onMouseDown={this.handleMouseDown(cell.row, cell.col)}
+              />
+        });
+    });
 
     console.log(grid); 
+
     return (
       <>
-        <button className="btn" onClick={() => this.Visualize()}>
+        <button className="btn" onClick={() => {
+          this.Visualize()
+        }}>
           Visualize 
         </button>
         <div className="grid">
@@ -79,7 +96,7 @@ const createCell = (row, col, isWall=false) => {
     row, 
     col, 
     isVisited: false,
-    isWall,
+    isWall, 
     isStart: row === START_POS.row && col === START_POS.col,
     isEnd: row === END_POS.row && col === END_POS.col, 
   });
