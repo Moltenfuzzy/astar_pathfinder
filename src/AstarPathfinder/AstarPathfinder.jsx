@@ -1,7 +1,7 @@
 import React from "react";
 import Cell from "./Cell/Cell";
 import "./AstarPathfinder.css";
-import { Astar } from "../Algorithms/Astar.js"
+import { main } from "../Algorithms/Astar.js"
 
 const MAXROW = 20; 
 const MAXCOL = 30; 
@@ -13,7 +13,7 @@ const START_POS = {
 
 const END_POS = {
   row: 18,
-  col: 28
+  col: 28 
 }
 
 export default class AstarPathfinder extends React.Component {
@@ -31,14 +31,16 @@ export default class AstarPathfinder extends React.Component {
 
   // BUG: pathfinding algo is broken, leaving 1 cell for it to pass through freezes app
   Visualize() {
-    const grid = this.state.gridData;
-    const path = Astar(grid, START_POS, END_POS);
-    if(path.length > 0) {
-      this.animatePath(path);
-    }
-    else {
-      console.log(path); 
-    }
+    // const grid = this.state.gridData;
+    // const path = Astar(grid, START_POS, END_POS);
+    // if(path.length > 0) {
+    //   this.animatePath(path);
+    // }
+    // else {
+    //   console.log(path); 
+    // }
+
+    console.log(main()); 
   } 
 
   animatePath(path) {

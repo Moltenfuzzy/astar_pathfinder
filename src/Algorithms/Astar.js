@@ -33,6 +33,27 @@
 //         // Add the child to the openList
 //         add the child to the openList
 
+export function main() {
+	const start = { 
+		row: 1,
+		col: 1
+	}
+	const end = {
+		row: 18, 
+		col: 18
+	}
+
+	let grid = [
+		[0,0,0,1,0,0],
+		[0,0,0,1,0,0],
+		[0,1,1,1,0,0],
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0]
+	]
+
+	return Astar(grid, start, end);
+}	
+
 class Node {
 	constructor(parent = null, pos = null) {
 		this.parent = parent;
@@ -44,7 +65,7 @@ class Node {
 }
 
 // pass in the grid, start and end locations
-export function Astar(grid, start, end) {
+function Astar(grid, start, end) {
 
 	let start_node = new Node(null, start);
 	let end_node = new Node(null, end); 
@@ -87,7 +108,7 @@ export function Astar(grid, start, end) {
 
 		let children = [];
 
-		// adjacent cells (REFFACTOR INTO A FOR LOOP)
+		// Allow 8 directional movement
 		let neighbors = [
 			{row: 0, col: -1}, 
 			{row: 0, col: 1}, 
@@ -112,7 +133,7 @@ export function Astar(grid, start, end) {
 				continue; 
 
 			// Ensuring not wall
-			if(grid[node_pos.row][node_pos.col].isWall)
+			if(grid[node_pos.row][node_pos.col].isWall || grid[node_pos.row][node_pos.col] !== 0)
 				continue;
 		
 			children.push(new Node(current_node, node_pos)); 
@@ -145,4 +166,6 @@ export function Astar(grid, start, end) {
 function isEqual(current_node, end_node) {
 	return (current_node.pos.row === end_node.pos.row) && (current_node.pos.col === end_node.pos.col);
 }
+
+
 
